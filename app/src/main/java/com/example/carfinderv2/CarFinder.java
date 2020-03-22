@@ -1,5 +1,6 @@
 package com.example.carfinderv2;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -11,13 +12,14 @@ import java.util.TimerTask;
 
 public class CarFinder extends AppCompatActivity {
 
+    @SuppressLint("StaticFieldLeak")
     private static Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         context = getApplicationContext();
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_car_finder);
+//        setContentView(R.layout.activity_car_finder);
 
         final Handler handler = new Handler();
         Timer timer = new Timer();
@@ -36,7 +38,7 @@ public class CarFinder extends AppCompatActivity {
                 });
             }
         };
-        timer.schedule(task, 0, 10000); //it executes this every 1000ms
+        timer.schedule(task, 0, 60000); //it executes this every 1000ms
     }
 
 

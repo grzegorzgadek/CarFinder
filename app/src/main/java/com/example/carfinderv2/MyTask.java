@@ -22,7 +22,6 @@ class MyTask extends AsyncTask<Object, Void, String> {
 
     @Override
     protected String doInBackground(Object... params) {
-//        activity = (CarFinder)params[0];
         try {
             StringBuilder sb = new StringBuilder();
             URL url = new URL(URI);
@@ -57,14 +56,11 @@ class MyTask extends AsyncTask<Object, Void, String> {
             String test = matcher.group(0);
             String requiredString = test.substring(test.indexOf(":") + 1, test.indexOf(","));
             Integer carAmount = Integer.valueOf(requiredString);
-            carAmount.byteValue();
 
             checkerProcessor.checkForNewCar(carAmount);
         }
 
         System.out.println(str);
-//            WebView webView = activity.findViewById(R.id.we);
-//            webView.loadData(str, "text/html; charset=UTF-8", null);
     }
 
 }

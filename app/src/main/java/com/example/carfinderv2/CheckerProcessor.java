@@ -3,11 +3,14 @@ package com.example.carfinderv2;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
+import android.os.Vibrator;
 import android.support.v4.app.NotificationCompat;
+
+import static android.content.Context.NOTIFICATION_SERVICE;
 
 class CheckerProcessor {
 
@@ -16,36 +19,41 @@ class CheckerProcessor {
     private static int ACTUAL_CAR_AMOUNT = 0;
     private Context context;
 
-    CheckerProcessor(Context context){
+    CheckerProcessor(Context context) {
         this.context = context;
     }
 
-    void checkForNewCar(Integer amountOfCars){
-        System.out.println("CAR_AMOUNT:::::::::::::::::::"+ACTUAL_CAR_AMOUNT);
-        if (ACTUAL_CAR_AMOUNT >= amountOfCars){
+    void checkForNewCar(Integer amountOfCars) {
+        System.out.println("CAR_AMOUNT:::::::::::::::::::" + ACTUAL_CAR_AMOUNT);
+        createAnnotation();
+        if (ACTUAL_CAR_AMOUNT >= amountOfCars) {
             ACTUAL_CAR_AMOUNT = amountOfCars;
+        } else {
             createAnnotation();
-        }else {
-            createAnnotation();
+            vibrateThePhone();
             ACTUAL_CAR_AMOUNT = amountOfCars;
         }
     }
 
-    private void createAnnotation(){
+    private void createAnnotation() {
         Intent notificationIntent = new Intent(Intent.ACTION_VIEW);
         notificationIntent.setData(Uri.parse(URI));
         PendingIntent pi = PendingIntent.getActivity(context, 0, notificationIntent, 0);
-        // Resources r = getResources();
         Notification notification = new NotificationCompat.Builder(context)
                 .setTicker("New Car!")
-                .setSmallIcon(android.R.drawable.ic_menu_report_image)
+                .setColor(Color.BLUE)
+                .setSmallIcon(android.R.drawable.ic_media_play)
                 .setContentTitle("New Car!")
-//                .setContentText("sdsd")
                 .setContentIntent(pi)
                 .setAutoCancel(true)
                 .build();
 
-        NotificationManager notificationManager2 =  (NotificationManager) context.getSystemService(Service.NOTIFICATION_SERVICE);
+        NotificationManager notificationManager2 = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
         notificationManager2.notify(0, notification);
+    }
+
+    private void vibrateThePhone() {
+        Vibrator v = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+        v.vibrate(800);
     }
 }
