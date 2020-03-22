@@ -21,6 +21,7 @@ class CheckerProcessor {
     }
 
     void checkForNewCar(Integer amountOfCars){
+        System.out.println("CAR_AMOUNT:::::::::::::::::::"+ACTUAL_CAR_AMOUNT);
         if (ACTUAL_CAR_AMOUNT >= amountOfCars){
             ACTUAL_CAR_AMOUNT = amountOfCars;
             createAnnotation();

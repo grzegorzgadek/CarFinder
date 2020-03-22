@@ -13,19 +13,16 @@ class MyTask extends AsyncTask<Object, Void, String> {
 
     private static final String URI = "https://www.otomoto.pl/osobowe/seg-compact/od-2013/?search%5Bfilter_float_price%3Afrom%5D=35000&search%5Bfilter_float_price%3Ato%5D=45000&search%5Bfilter_float_mileage%3Ato%5D=100000&search%5Bfilter_float_engine_capacity%3Afrom%5D=1500&search%5Bfilter_enum_fuel_type%5D%5B0%5D=petrol&search%5Bfilter_float_engine_power%3Afrom%5D=120&search%5Bfilter_enum_damaged%5D=0&search%5Bfilter_enum_country_origin%5D%5B0%5D=pl&search%5Bfilter_enum_original_owner%5D=1&search%5Bfilter_enum_no_accident%5D=1&search%5Border%5D=created_at_first%3Adesc&search%5Bbrand_program_id%5D%5B0%5D=&search%5Bcountry%5D=";
 
-    CarFinder activity;
-    Context context;
     private CheckerProcessor checkerProcessor;
 
-    public MyTask(Context context)
+    MyTask(Context context)
     {
-        this.context = context;
         checkerProcessor = new CheckerProcessor(context);
     }
 
     @Override
     protected String doInBackground(Object... params) {
-        activity = (CarFinder)params[0];
+//        activity = (CarFinder)params[0];
         try {
             StringBuilder sb = new StringBuilder();
             URL url = new URL(URI);
@@ -52,9 +49,6 @@ class MyTask extends AsyncTask<Object, Void, String> {
 
     @Override
     protected void onPostExecute(String str) {
-        //Do something with result string
-//        Document doc = Jsoup.parse(str, "", Parser.xmlParser());
-//        Element resulsts = doc.getElementById("offers");
 
         Pattern pattern = Pattern.compile("\"result_count\":\\d{1,3},");
         Matcher matcher = pattern.matcher(str);
